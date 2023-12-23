@@ -9,12 +9,14 @@ public class Laptop {
     private int ramSize;
     private int storageSize;
     private String operatingSystem;
+    private String color;
 
-    public Laptop(String model, int ramSize, int storageSize, String operatingSystem) {
+    public Laptop(String model, int ramSize, int storageSize, String operatingSystem, String color) {
         this.model = model;
         this.ramSize = ramSize;
         this.storageSize = storageSize;
         this.operatingSystem = operatingSystem;
+        this.color = color;
     }
 
     public String getModel() {
@@ -31,6 +33,10 @@ public class Laptop {
 
     public String getOperatingSystem() {
         return operatingSystem;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public static Set<Laptop> filterLaptops(Set<Laptop> laptops, Map<String, Object> criteria) {
@@ -62,29 +68,32 @@ public class Laptop {
                 return operatingSystem.equals(value);
             case "Model":
                 return model.equals(value);
+            case "Color":
+                return color.equals(value);
             default:
                 return false;
         }
     }
 
     public static void main(String[] args) {
-
         Set<Laptop> laptops = new HashSet<>();
-        laptops.add(new Laptop("Asus", 8, 512, "Windows"));
-        laptops.add(new Laptop("HP", 16, 256, "Linux"));
-        laptops.add(new Laptop("Dell", 12, 1024, "Windows"));
-        laptops.add(new Laptop("Lenovo", 8, 512, "Linux"));
-        laptops.add(new Laptop("Apple", 16, 512, "macOS"));
+        laptops.add(new Laptop("Asus", 8, 512, "Windows", "Black"));
+        laptops.add(new Laptop("HP", 16, 256, "Linux", "Silver"));
+        laptops.add(new Laptop("Dell", 12, 1024, "Windows", "White"));
+        laptops.add(new Laptop("Lenovo", 8, 512, "Linux", "Blue"));
+        laptops.add(new Laptop("Apple", 16, 512, "macOS", "Silver"));
 
         Map<String, Object> criteria = new HashMap<>();
         criteria.put("RAM", 8);
         criteria.put("OperatingSystem", "Windows");
+        criteria.put("Color", "Black");
 
         Set<Laptop> result = Laptop.filterLaptops(laptops, criteria);
 
         for (Laptop laptop : result) {
             System.out.println("Model: " + laptop.getModel() + ", RAM: " + laptop.getRamSize() +
-                    ", Storage Size: " + laptop.getStorageSize() + ", OS: " + laptop.getOperatingSystem());
+                    ", Storage Size: " + laptop.getStorageSize() + ", OS: " + laptop.getOperatingSystem() +
+                    ", Color: " + laptop.getColor());
         }
     }
 }
